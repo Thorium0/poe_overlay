@@ -52,7 +52,11 @@ export function createTray(params: CreateTrayParams): Tray | null {
       path.join(process.cwd(), 'packages', 'overlay'),
       path.join(process.cwd(), 'packages', 'overlay', 'build')
     ];
-    const names = ['xile512.ico','icon.ico','xilehudICO.ico'];
+    // Platform-aware icon priority
+    const isLinux = process.platform === 'linux';
+    const names = isLinux 
+      ? ['xilehud.png', 'icon.png', 'xile512.ico', 'icon.ico', 'xilehudICO.ico']
+      : ['xile512.ico', 'icon.ico', 'xilehudICO.ico', 'xilehud.png', 'icon.png'];
     const candidates: string[] = [];
     for (const r of roots) {
       for (const n of names) candidates.push(path.join(r, n));
